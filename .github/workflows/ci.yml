@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  testes:
+    name: testes (${{ matrix.os }}, node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['20', '22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # `shell: bash` nao e enfeite: no PowerShell do runner o glob chega ao
+      # node como texto literal e ele procura um arquivo com asterisco no nome.
+      - name: o nucleo, o juiz e os numeros do README
+        shell: bash
+        run: node --test testes/nucleo.test.js testes/juiz.test.js testes/medidas.test.js
+      - name: as varreduras caras
+        shell: bash
+        run: node --test testes/pesados.test.js
+      - name: as tabelas do README, recalculadas
+        shell: bash
+        run: node ferramentas/medidor.js
