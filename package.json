@@ -1,0 +1,15 @@
+{
+  "name": "topologias",
+  "version": "1.0.0",
+  "description": "Topologias em conjuntos finitos contadas por pre-ordens e conferidas pela definicao literal: quantas existem, quantas sao T0, e os buracos no numero de abertos, em Node puro",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": "./src/index.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test testes/*.test.js",
+    "medir": "node ferramentas/medidor.js"
+  },
+  "license": "MIT",
+  "private": false
+}
